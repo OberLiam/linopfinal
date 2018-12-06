@@ -1,0 +1,32 @@
+package main;
+
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import javax.imageio.ImageIO;
+
+public class Main {
+	public static void main(String[] args)
+	{
+		System.out.println("Starting...");
+		
+		BufferedImage img = null;
+		try {
+			img = ImageIO.read(new File("images/RED.jpg"));
+			System.out.println("Width: "+img.getWidth());
+			System.out.println("height: "+img.getHeight());
+			
+			ByteArrayOutputStream out = new ByteArrayOutputStream();
+			ImageIO.write(img, "BMP", out);
+			byte[] result = out.toByteArray();
+			for(int pixel : result)
+			{
+				System.out.println("PixelA: "+pixel);
+			}
+			long totalRed = 0;
+			long totalBlue = 0;
+			long totalGreen = 0;
+			long totalAlpha = 0;
+		} catch(Exception e) {System.out.println(e);}
+	}
+}

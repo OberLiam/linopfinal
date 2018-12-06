@@ -1,0 +1,47 @@
+package main;
+
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import javax.imageio.ImageIO;
+
+public class Main {
+	public static void main(String[] args) {
+		System.out.println("Starting...");
+
+		BufferedImage img = null;
+		try {
+			img = ImageIO.read(new File("images/strawberry.jpg"));
+			int w = img.getWidth();
+			int h = img.getHeight();
+			System.out.println("Width: " + w);
+			System.out.println("height: " + h);
+			
+			long totalR = 0;
+			long totalG = 0;
+			long totalB = 0;
+			
+			for (int i = 0; i < w; i++)
+				for (int j = 0; j < h; j++) {
+					int argb = img.getRGB(i, j);
+					int a = (argb & 0xff000000) >>> 24;
+					int r =	(argb & 0x00ff0000) >>> 16;
+					int g = (argb & 0x0000ff00) >>> 8;
+					int b = (argb & 0x000000ff) >>> 0;
+					totalR += r;
+					totalG += g;
+					totalB += b;
+				}
+			
+			int averageR = (int)(totalR/(w*h));
+			System.out.println("average red  : "+Integer.toHexString(averageR));
+			int averageG = (int)(totalG/(w*h));
+			System.out.println("average green: "+Integer.toHexString(averageG));
+			int averageB = (int)(totalB/(w*h));
+			System.out.println("average blue : "+Integer.toHexString(averageB));
+
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+}
